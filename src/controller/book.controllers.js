@@ -5,7 +5,7 @@ async function createBookController(req, res) {
     const userId = req.userId
 
     try {
-        const createdBook = await bookServices.createBookService(newBook, userId)
+        const createdBook = await bookService.createBookService(newBook, userId)
         res.status(201).send(createdBook)
     } catch (e) {
         return res.status(400).send(e.message)
@@ -14,7 +14,7 @@ async function createBookController(req, res) {
 
 async function findAllBooksController(req, res) {
     try {
-        const books = await bookServices.findAllBooksService()
+        const books = await bookService.findAllBooksService()
         res.send(books)
     } catch (e) {
         res.status(404).send(e.message)

@@ -4,6 +4,7 @@ db.run(`CREATE TABLE IF NOT EXISTS loans (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     userId INTEGER,
     bookId INTEGER,
+    username TEXT,
     dueDate DATE,
     FOREIGN KEY (userId) REFERENCES users(id),
     FOREIGN KEY (bookId) REFERENCES books(id)
@@ -28,7 +29,15 @@ function createLoanRepository(userId, bookId, dueDate) {
 function findAllLoansRepository() {
     return new Promise((resolve, reject) => {
         db.all(`
-            SELECT * FROM loans    
+            SELECT
+                loans.id,
+                loans.dueDate,
+                users.email,
+                users.username,
+                books.title
+            FROM loans
+            JOIN users ON loans.userId = users.id
+            JOIN books ON loans.bookId = books.id
         `,
         [],
         (err, rows) => {
