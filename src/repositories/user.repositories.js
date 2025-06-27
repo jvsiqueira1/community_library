@@ -17,7 +17,7 @@ function createUserRepository(newUser) {
             INSERT INTO users (username, email, password, avatar)
             VALUES (?, ?, ?, ?)   
         `, [ username, email, password, avatar ],
-        (err) => {
+        function (err) {
             if (err) {
                 reject(err)
             } else {
@@ -34,7 +34,7 @@ function findUserByEmailRepository(email) {
 
     return new Promise((resolve, reject) => {
         db.get(`
-            SELECT id, username, email, avatar FROM users
+            SELECT id, username, email, avatar, password FROM users
             WHERE email = ?
         `, [email],
         (err, row) => {
